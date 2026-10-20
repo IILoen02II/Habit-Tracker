@@ -1,9 +1,9 @@
 import streamlit as st
 
-from src import metrics, repository as repo
+from src import metrics, repository as repo, theme
 
-st.set_page_config(page_title="Hábitos", page_icon="⚙️")
-st.title("⚙️ Hábitos")
+theme.setup("Hábitos")
+st.title("Hábitos")
 
 today = metrics.today_lima()
 habits = repo.list_habits(active_only=False, on_date=today)
@@ -28,7 +28,7 @@ if not habits.empty:
             hid = int(habits.loc[habits["name"] == name, "id"].iloc[0])
             try:
                 repo.set_goal(hid, target, since)
-                st.success("Meta actualizada ✅")
+                st.success("Meta actualizada")
             except ValueError as e:
                 st.error(str(e))
 
@@ -40,7 +40,7 @@ if not habits.empty:
         if st.form_submit_button("Aplicar"):
             hid = int(habits.loc[habits["name"] == name2, "id"].iloc[0])
             repo.set_active(hid, active)
-            st.success("Listo ✅")
+            st.success("Listo")
 
 st.subheader("Nuevo hábito")
 with st.form("nuevo"):
@@ -52,12 +52,12 @@ with st.form("nuevo"):
                              format_func=lambda d: "Al menos" if d == "min" else "Como máximo")
     goal = st.number_input("Meta (por día, o por semana si es semanal)", min_value=0.0, step=0.25)
     start = st.date_input("Vigente desde", value=today, key="start_new")
-    if st.form_submit_button("Crear hábito"):
+    if st.form_submit_button("Crear hábito", type="primary"):
         if not n.strip() or not unit.strip():
             st.error("Nombre y unidad son obligatorios.")
         else:
             try:
                 repo.add_habit(n.strip(), unit.strip(), freq, direction, goal, start)
-                st.success("Hábito creado ✅")
+                st.success("Hábito creado")
             except Exception as e:  # nombre duplicado, etc.
                 st.error(f"No se pudo crear: {e}")

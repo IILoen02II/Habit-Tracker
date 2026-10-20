@@ -36,6 +36,10 @@ def test_week_starts_monday():
     assert metrics.week_start(D(2026, 10, 18)) == D(2026, 10, 12)  # domingo -> lunes
 
 
+def test_format_date_es():
+    assert metrics.format_date_es(D(2026, 10, 19)) == "Lunes 19 de octubre"
+
+
 def test_is_met():
     assert metrics.is_met(2.0, 2.0, "min") is True or metrics.is_met(2.0, 2.0, "min")
     assert not metrics.is_met(1.5, 2.0, "min")

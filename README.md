@@ -4,7 +4,8 @@ A personal habit-tracking web app built with **Python, Streamlit and PostgreSQL*
 
 **Live app:** _add your Streamlit link here_
 
-![Dashboard](docs/dashboard.png)
+![Dashboard](docs/dashboard_app.png)
+![Dashboard](docs/dashboard_register.png)
 
 ## Why I built it
 
@@ -139,4 +140,4 @@ The tests cover the streak and compliance logic in `src/metrics.py`.
 
 ## Author
 
-**Jeremy** · _add your LinkedIn / GitHub link here_
+**Jeremy** · [(https://github.com/IILoen02II)]

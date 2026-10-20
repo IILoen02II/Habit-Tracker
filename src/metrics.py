@@ -1,4 +1,3 @@
-"""Cálculos de rachas y cumplimiento. No depende de Streamlit ni de la base."""
 from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 
@@ -9,6 +8,16 @@ TZ = ZoneInfo("America/Lima")
 
 def today_lima() -> date:
     return datetime.now(TZ).date()
+
+
+_DIAS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+_MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
+          "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+
+
+def format_date_es(d: date) -> str:
+    """'Lunes 19 de octubre', sin depender del idioma del sistema."""
+    return f"{_DIAS[d.weekday()]} {d.day} de {_MESES[d.month - 1]}"
 
 
 def week_start(d: date) -> date:

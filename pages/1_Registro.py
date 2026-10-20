@@ -1,9 +1,9 @@
 import streamlit as st
 
-from src import metrics, repository as repo
+from src import metrics, repository as repo, theme
 
-st.set_page_config(page_title="Registro", page_icon="📝")
-st.title("📝 Registro")
+theme.setup("Registro")
+st.title("Registro")
 
 STEPS = {"litros": 0.25, "horas": 0.5, "minutos": 5.0}
 
@@ -38,8 +38,8 @@ with st.form("registro"):
                 key=key,
                 help=f"Meta: {sign} {goal} {h.unit}",
             )
-    submitted = st.form_submit_button("Guardar")
+    submitted = st.form_submit_button("Guardar", type="primary")
 
 if submitted:
     repo.save_logs(day, values)
-    st.success("Guardado ✅")
+    st.success("Guardado")

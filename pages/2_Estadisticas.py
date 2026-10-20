@@ -2,10 +2,10 @@ from datetime import timedelta
 
 import streamlit as st
 
-from src import charts, metrics, repository as repo
+from src import charts, metrics, repository as repo, theme
 
-st.set_page_config(page_title="Estadísticas", page_icon="📊")
-st.title("📊 Estadísticas")
+theme.setup("Estadísticas")
+st.title("Estadísticas")
 
 today = metrics.today_lima()
 habits = repo.list_habits(active_only=False, on_date=today)
@@ -26,9 +26,9 @@ if h["frequency"] == "daily":
     current, best = metrics.streaks(df.loc[df["met"], "log_date"], today)
     pct = metrics.compliance_pct(df, days, today)
     c1, c2, c3 = st.columns(3)
-    c1.metric("Racha actual", f"{current} d")
-    c2.metric("Mejor racha", f"{best} d")
-    c3.metric(f"Cumplimiento {days} d", "—" if pct is None else f"{pct}%")
+    c1.metric("Racha", f"{current} d")
+    c2.metric("Mejor", f"{best} d")
+    c3.metric(f"{days} días", "—" if pct is None else f"{pct}%")
 
     window = df[df["log_date"] >= today - timedelta(days=days - 1)]
     st.plotly_chart(charts.calendar_heatmap(df, today))
@@ -46,7 +46,7 @@ else:
     )
     pct = metrics.weekly_compliance_pct(df)
     c1, c2, c3 = st.columns(3)
-    c1.metric("Racha actual", f"{current} sem")
-    c2.metric("Mejor racha", f"{best} sem")
-    c3.metric("Semanas cumplidas", "—" if pct is None else f"{pct}%")
+    c1.metric("Racha", f"{current} sem")
+    c2.metric("Mejor", f"{best} sem")
+    c3.metric("Cumplidas", "—" if pct is None else f"{pct}%")
     st.plotly_chart(charts.weekly_bar(df, h["unit"]))
